@@ -1,0 +1,14 @@
+services:
+  webserver:
+    container_name: nginx
+    build: 
+      context: .
+    ports:
+      - 80:80
+    # volumes:
+    #   - /Users/zaks/gitrepos/nginx-web-server/sites/:/usr/share/nginx/html/
+    #   - /Users/zaks/gitrepos/nginx-web-server/conf.d/:/etc/nginx/conf.d/
+    #   - /Users/zaks/gitrepos/nginx-web-server/hosts:/etc/hosts
+
+# commands
+# - docker-compose up
