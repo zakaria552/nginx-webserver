@@ -22,10 +22,10 @@ parse_arguments() {
               -r|--route)
                 if [[ -n "$2" ]]; then
                     route="$2"
-                    echo "- route is $domain"
+                    echo "- route is $route"
                     shift
                 else
-                    quit 1 "Error: missing domain name after the flag."
+                    quit 1 "Error: missing route after the flag."
                 fi
                 ;;
             -p|--path)
@@ -63,7 +63,8 @@ create_nginx_server() {
         echo "route $route"
         location=$route
         directive="alias"
-        root="/usr/share/nginx/html/${domain}${location//\//-}"
+        root="/usr/share/nginx/html/${domain}${location//\//-}/"
+        echo $root
         serve_static_from_route="try_files \$uri \$uri/ =404;"
     fi
     mkdir -p ./conf.d

@@ -75,7 +75,7 @@ check_entry_exists() {
 }
 echo "------Deploying websites------"
 echo $(ls "./sites")
-parse_arguments $@
+#parse_arguments $@
 
 #check_build_folder
 echo "-> Building docker image"

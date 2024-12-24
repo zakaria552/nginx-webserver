@@ -26,6 +26,15 @@ parse_arguments() {
                     quit 1 "Error: missing project path after the flag"
                 fi
                 ;;
+            -r|--route)
+                if [[ -n "$2" ]]; then
+                    route="$2"
+                    echo "- route is $route"
+                    shift
+                else
+                    quit 1 "Error: missing route after the flag."
+                fi
+                ;;
         esac
         shift
     done
@@ -51,6 +60,7 @@ build_website() {
     echo "-> Building react project"
     echo "- Changing directory to $project_path"
     cd $project_path
+    modify_base_url
     echo "- npm installing dependencies"
     npm install
     echo "- running react build command"
@@ -61,6 +71,13 @@ build_website() {
     fi
     cd $work_dir
     echo "✅ Successfully built react app"
+}
+
+modify_base_url() {
+    if [[ $route ]]; then
+        echo "- Injecting the base url - [$route]"
+        sudo perl -i -pe "if (!\$done && s|{|{\n  \\\"homepage\\\": \\\"$route\\\",|) { \$done = 1 }" package.json
+    fi
 }
 
 work_dir=$(pwd)
